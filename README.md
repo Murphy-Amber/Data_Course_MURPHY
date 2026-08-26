@@ -7,3 +7,4 @@ I hope we can rise to the challenge
 For science to not be magic, and for technology to not be a black box of mysteries
 For ethics to be employed, and morals staunchly held to
 In a world of tumult and noise with every side crying foul
+Where vapors and smoke confound less than emotion and pride the darkness of night looms nigh upon all horizons
