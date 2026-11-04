@@ -28,6 +28,7 @@ Wdf = WIRT2df %>%
 View(Wdf)
 
 #cleaning data
+library(tidyverse)
 Wdff = Wdf %>%
   pivot_longer(cols = c('state', '32940'),
                names_to = 'states',
@@ -71,9 +72,33 @@ join_by()
 full_join(x,y)
 
 clean_table4a = table4a %>%
-pivot_wider(names_from = '', values_from = '')
+pivot_longer(cols = c('1999', '2000'),
+  names_to = 'year', values_to = 'cases')
 View(clean_table4a)
 
 clean_table4b = table4b %>%
-  pivot_wider()
+  pivot_longer(cols = c('1999', '2000'),
+               names_to = 'year', values_to = 'population')
 View(clean_table4b)
+
+full_join(clean_table4a, clean_table4b)
+
+table5
+clean_table5 = table5 %>%
+  separate(rate, into = c('cases', 'population')) %>%
+  unite('year', century:year, remove = TRUE)
+View(clean_table5)
+#or you can do it this way
+table5 %>%
+  mutate(year = paste0(table5$century, table5$year, sep = ''))  %>%
+  select(-century) %>%
+  separate(rate, into = c('cases', 'population'))
+
+#Real data cleaning
+install.packages("readxl")
+library(readxl)
+read.csv('Assignments/Assignment_4/FluViewPhase2Data/ICL_NREVSS_Public_Health_Labs.csv', skip = 1)
+range = 'A2:M420'
+
+install.packages('janitor')
+library(janitor)
