@@ -44,7 +44,7 @@ Graph_dat %>%
 library(gganimate)
 Graph_dat %>%
   filter(Substrate == 'Itaconic Acid') %>%
-  group_by(Substrate, Sample.ID, Hours, Absorbance, Dilution) %>%
+  group_by(Sample.ID, Hours, Dilution) %>%
   summarise(avgAB = mean(Absorbance, na.rm = TRUE)) %>%
   ggplot(aes(x = Hours,
              y = avgAB,
@@ -53,6 +53,6 @@ Graph_dat %>%
   facet_wrap(~Dilution) +
   labs(title = 'Hours{frame_time}', x = 'Time') +
   transition_reveal(Hours) +
-  geom_path() +
+  geom_line() +
   scale_x_continuous(limits = c(0, 150), breaks = c(50, 150)) +
   scale_y_continuous(limits = c(0.0, 2.5), breaks = c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5))

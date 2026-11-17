@@ -1,0 +1,12 @@
+1. The scientifically meaningless values I did not include in the best graph, to keep it clean and accurate to only use relevant values. The two values that according to prior models were not significant were Temperature and Nitrogen.
+
+2. Yes. It looked like Nitrogen had a nonlinear almost bell curve relationship with Growth Rate.
+https://www.geeksforgeeks.org/r-language/curve-fitting-in-r/
+
+3. The code I would write for modeling this would be 
+Polylinear = lm(formula = GrowthRate ~ poly(Nitrogen, 5, raw = TRUE), data = dat)
+
+summary(Polylinear)
+report(Polylinear)
+
+You can adjust the degree, currently at 5 to fit different angles of curves.
