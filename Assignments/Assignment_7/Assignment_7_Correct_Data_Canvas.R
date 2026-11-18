@@ -6,8 +6,10 @@ library(ggplot2)
 
 #Cleaning up the data Not sure what needs cleaning
 clean_dat = dat %>%
-  pivot_longer(cols = c('Assemblies.of.God', 'Episcopal.Church', 'Pentecostal.Church.of.God', 'Greek..Orthodox', 'LDS', 'Southern.Baptist.Convention', 'United.Methodist.Church', 'Buddhism.Mahayana', 'Catholic', 'Evangelical', 'Muslim', 'Non.Denominational', 'Orthodox')
-               )
+  pivot_longer(cols = c('Assemblies.of.God', 'Episcopal.Church', 'Pentecostal.Church.of.God', 'Greek.Orthodox', 'LDS', 'Southern.Baptist.Convention', 'United.Methodist.Church', 'Buddhism.Mahayana', 'Catholic', 'Evangelical', 'Muslim', 'Non.Denominational', 'Orthodox'),
+               names_to = 'Religions', values_to = 'Proportion')
+View(clean_dat)
+
 #Making figures
 dat %>%
   group_by(Pop_2010, Religious, County) %>%
@@ -50,3 +52,19 @@ dat %>%
   facet_wrap(~County) +
   geom_point()
 #Non.demonimational proportions only follow the pattern in certain counties, in some like Kane county, the inverse is true, the more non.denominational the more non.religious
+
+#Now I will compare all religions together using clean_dat
+clean_dat %>%
+  group_by(Non.Religious, Religions, County, Proportion) %>%
+  ggplot(aes(x = Proportion, y = Non.Religious, color = Religions)) +
+  facet_wrap(~County) +
+  geom_point()
+#This confirms the pattern that in general an increase to all religions is expected to increase roughly equally when the proportion of non.religious goes down.
+
+clean_dat %>%
+  group_by(Religions, County, Proportion) %>%
+  ggplot(aes(x = Religions, y = Proportion)) +
+  facet_wrap(~County) +
+  geom_bar(stat = 'identity', position ='dodge') +
+  theme(axis.text.x = element_text(angle = 90, size = 5))
+#This compares the proportional amount of each religion per county, helping to establish religion proportion relationships for each county.

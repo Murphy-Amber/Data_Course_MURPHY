@@ -39,18 +39,23 @@ summary(aov4)
 mod1 = glm(formula = GrowthRate ~ Temperature, data = dat)
 summary(mod1)
 report(mod1)
+mean(mod1$residuals^2)
 
 mod2 = glm(formula = GrowthRate ~ Humidity, data = dat)
 summary(mod2)
 report(mod2)
+mean(mod2$residuals^2)
+
 
 mod3 = glm(formula = GrowthRate ~ Nitrogen, data = dat)
 summary(mod3)
 report(mod3)
+mean(mod3$residuals^2)
 
 mod4 = glm(formula = GrowthRate ~ Light, data = dat)
 summary(mod4)
 report(mod4)
+mean(mod4$residuals^2)
 
 compare_performance(mod1, mod2)
 compare_performance(mod3, mod4)
@@ -60,6 +65,7 @@ compare_performance(mod2, mod4)
 goodmod = glm(formula = GrowthRate ~ Light*Humidity, data = dat)
 summary(goodmod)
 report(goodmod)
+mean(goodmod$residuals^2)
 
 #Predictions based upon this good model and the two models that comprise it
 dat2 = dat
@@ -108,5 +114,9 @@ dat_comb %>%
 PolyLinear = lm(formula = GrowthRate ~ poly(Nitrogen, 5, raw = TRUE), data = dat)
 summary(PolyLinear)
 report(PolyLinear)
+mean(PolyLinear$residuals^2)
 #The above gives you a better fit, but the below model is simpler
 SimpleGeneralLinear = glm(formula = GrowthRate ~ Nitrogen, data = dat)
+summary(SimpleGeneralLinear)
+report(SimpleGeneralLinear)
+mean(SimpleGeneralLinear$residuals^2)
