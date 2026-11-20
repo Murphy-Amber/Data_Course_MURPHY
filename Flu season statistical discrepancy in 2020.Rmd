@@ -9,17 +9,45 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Introduction
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+## Opening the Data
+
+```{r echo = FALSE}
+#Loading the data, removing the first row so that R can open it.
+library(tidyverse)
+library(ggplot2)
+
+FluvPHL = read.csv('FluViewPhase2Data/ICL_NREVSS_Public_Health_Labs.csv', quote = "\"", skip = 1)
+str(FluvPHL)
+View(FluvPHL)
+
+FluvCL = read.csv('FluViewPhase2Data/ICL_NREVSS_Clinical_Labs.csv', quote = "\"", skip = 1)
+str(FluvCL)
+View(FluvCL)
 ```
 
-## Including Plots
+##Cleaning and Combining the data
+An extraneous region column was removed, since all the data was national no other region data was recorded. All the rest of the data was relevant and tidy, so I simply then combined the two data-sets.
+
+```{r echo = FALSE}
+FluvCL_clean = FluvCL %>%
+  select(-REGION)
+View(FluvCL_clean)
+
+FluvPHL_clean = FluvPHL %>%
+  select(-REGION)
+View(FluvPHL_clean)
+
+Fluv_Complete = full_join(FluvCL_clean, FluvPHL_clean)
+View(Fluv_Complete)
+```
+
+## Plots of Data
 
 You can also embed plots, for example:
 
